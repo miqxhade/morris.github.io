@@ -1,58 +1,96 @@
-# Stripe Elements examples
-
-[See them in action!](https://stripe.github.io/elements-examples)
-
-This repository contains examples of stylish forms that use Stripe Elements. These examples illustrate how to handle errors in real-time and style focus states, error states, and placeholders.
-
-## Need help with Elements?
-
-- Get started with Stripe Elements by [reading our quickstart guide](https://stripe.com/docs/stripe-js/elements/quickstart).
-- For help with Elements and your Stripe integration in general, please [contact Stripe Support](https://support.stripe.com/).
+<!DOCTYPE html>
+<html>
+<head>
+		<title>Sample Layout</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-# In this repo
+<link rel="stylesheet" type="text/css" href="index.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
+  <script src="https://js.stripe.com/v3/"></script>
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+<body>
 
-Common code for handling errors and form submission lives [here](js/index.js).
+<div class="container">
+  <h2>Payment Details</h2>
+  <div class="panel w3-card-4">
+    <div class="panel-heading"><i class='fas fa-lock' style='font-size:15px'></i> This is a secure 128-bit SSL Encrypted payment. You're safe.</div>
 
-## Example 1
+    <div class="panel-body">
+    	<label for="fullname">Full Name on a Card</label>
+    	<input class="form-control form-control-lg" type="text" name="fullname" placeholder="Morris Reyes" required>
+    	<form action="/charge" method="post" id="payment-form">
+    		<br>
+  <div class="form-row">
+    <label for="card-element">
+      Card number <small>The 16 digits on front of your card</small>
+    </label>
+    <div id="card-element">
+      <!-- A Stripe Element will be inserted here. -->
+    </div>
 
-- [JavaScript](js/example1.js)
-- [CSS](css/example1.css)
+    <!-- Used to display form errors. -->
+    <div id="card-errors" role="alert"></div>
+  </div>
+<br>
+  <label for="chkPassport">
+    <input type="checkbox" id="chkPassport" />
+   Discount Coupon
+</label>
 
-Example 1 shows a form that uses the `card` Element, a custom web font, and a solid icon with a custom color.
+<div id="dvPassport" style="display: none;font-size: 25px;" >
+   <p class="label label-warning">10% discount</p>
+</div>
+                                   
+<input id="jpy" type="checkbox" name="jpy" value="0.0089613765"  />
+US dollars to Japanese Yen
+</div>
+<div class="panel-footer">
+	You will be charged $<input id="sum" class="sum" type="text" name="sum" value="29" style="width: 30px;" readonly="" disabled="disabled"><input id="cash2"class="cash1" type="text" name="cash1" value="2.90" readonly="" disabled="disabled" hidden=""><input id="cash1"class="cash2" type="text" name="cash2" value="29"readonly="" disabled="disabled"  hidden="">every month
+</div>
+  </div>
+  <button class="btn btn-primary btn-lg btn-block">Complete You're Transaction</button>
+</form>
 
-## Example 2
 
-- [JavaScript](js/example2.js)
-- [CSS](css/example2.css)
+</div>
 
-Example 2 shows a "floaty-label" form that uses individual `cardNumber`, `cardExpiry`, and `cardCvc` Elements with a custom web font.
+  <script src="js/l10n.js" data-rel-js></script>
 
-The form also collects address (and thus postal code) outside of the payment form. It passes the postal code to Stripe on tokenization.
+  <!-- Scripts for each example: -->
+  <script src="js/example2.js" data-rel-js></script>
+<script type="text/javascript">
+	$(function () {
+        $("#chkPassport").click(function () {
+            if ($(this).is(":checked")) {
+                $("#dvPassport").show();
+                $("#AddPassport").hide();
+                $("#sum").val(Number($("#cash1").val()) - Number($("#cash2").val()));
+            } else {
+                $("#dvPassport").hide();
+                $("#AddPassport").show();
+                $("#sum").val(Number($("#cash2").val()) + Number($("#sum").val()));
+            }
+        });
+    });
+</script>
 
-## Example 3
+<script type="text/javascript">
+	$(function () {
+        $("#jpy").click(function () {
+            if ($(this).is(":checked")) {
+                $("#sum").val(Number($("#jpy").val())* Number($("#sum").val()));
+            } else {
+    $("#sum").val(29.00);
+            }
+        });
+    });
+</script>
 
-- [JavaScript](js/example3.js)
-- [CSS](css/example3.css)
 
-Example 3 shows a form that uses individual `cardNumber`, `cardExpiry`, and `cardCvc` Elements with a custom web font.
-
-The form also collects postal code outside of the payment form.
-
-## Example 4
-
-- [JavaScript](js/example4.js)
-- [CSS](css/example4.css)
-
-Example 4 shows a form that uses the `paymentRequestButton` Element to provide
-Apple Pay / Payment Request API support, as well as a `card` Element with a
-custom web font.
-
-## Example 5
-
-- [JavaScript](js/example5.js)
-- [CSS](css/example5.css)
-
-Example 5 shows a form that uses the `paymentRequestButton` Element to provide
-Apple Pay / Payment Request API support, as well as a `card` Element with a
-custom icon color.
+</body>
+</html>
